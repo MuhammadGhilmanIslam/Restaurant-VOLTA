@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VOLTA — Restoran & Brasserie</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,300&family=Playfair+Display:ital@1&display=swap" rel="stylesheet">
+<!-- Tautan ke file CSS terpisah -->
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- LOADER -->
+<div id="loader">
+  <div class="loader-logo">V<span>O</span>LTA</div>
+  <div class="loader-bar"><div class="loader-progress"></div></div>
+</div>
+
+<!-- TOAST CONTAINER -->
+<div class="toast-container" id="toastContainer"></div>
+
+<!-- OVERLAY -->
+<div class="overlay" id="overlay" onclick="closeCart()"></div>
+
+<!-- CART PANEL -->
+<div class="cart-panel" id="cartPanel">
+  <div class="cart-header">
+    <h3>KERANJANG</h3>
+    <button class="cart-close" onclick="closeCart()">✕</button>
+  </div>
+  <div class="cart-items" id="cartItems">
+    <div class="cart-empty">
+      <div class="cart-empty-icon">🛒</div>
+      <p>Keranjang Anda kosong</p>
+    </div>
+  </div>
+  <div class="cart-footer" id="cartFooter" style="display:none">
+    <div class="cart-total">
+      <span class="cart-total-label">Total</span>
+      <span class="cart-total-num" id="cartTotalDisplay">Rp 0</span>
+    </div>
+    <button class="btn btn-primary" style="width:100%;justify-content:center;" onclick="checkout()">
+      Pesan Sekarang →
+    </button>
+  </div>
+</div>
+
+<!-- CART TRIGGER -->
+<button class="cart-trigger hidden" id="cartTrigger" onclick="openCart()">
+  🛒 Keranjang <span class="cart-count" id="cartCount">0</span>
+</button>
+
+<!-- NAV -->
+<nav id="navbar">
+  <a href="#" class="nav-logo">V<span>O</span>LTA</a>
+  <span style="color:var(--accent); font-family:var(--font-display); font-size:24px; letter-spacing:2px; margin-left:16px;">ADMIN DASHBOARD</span>
+  <ul class="nav-links">
+    <li><a onclick="scrollToSection('dashboard')" class="active">Dashboard</a></li>
+    <li><a onclick="scrollToSection('reservasi')">Reservasi</a></li>
+    <li><a onclick="scrollToSection('pesanan')">Pesanan</a></li>
+  </ul>
+  <div class="nav-cta">
+    <button class="btn btn-outline" onclick="logoutAdmin()">Logout</button>
+  </div>
+</nav>
+
+<!-- HERO - Removed in Admin -->
+<!-- MENU - Removed in Admin -->
+
+<!-- LOGIN OVERLAY -->
+<div id="loginOverlay" style="position:fixed; inset:0; background:var(--black); z-index:9999; display:flex; align-items:center; justify-content:center; flex-direction:column;">
+  <div class="form-card" style="width:100%; max-width:400px; text-align:center;">
+    <div style="font-family:var(--font-display); font-size:40px; letter-spacing:4px; color:var(--white); margin-bottom:8px;">V<span style="color:var(--accent)">O</span>LTA</div>
+    <div style="font-size:12px; color:var(--muted); letter-spacing:2px; text-transform:uppercase; margin-bottom:32px;">Admin Access Only</div>
+    
+    <div class="form-group" style="margin-bottom:24px;">
+      <input type="password" id="adminPassword" placeholder="Masukkan Password Admin" style="text-align:center; padding:16px; font-size:16px; letter-spacing:2px;">
+    </div>
+    <button class="btn btn-primary" style="width:100%; justify-content:center; padding:16px;" onclick="loginAdmin()">LOGIN</button>
+  </div>
+</div>
+
+<!-- RESERVASI -->
+<section id="reservasi">
+  <div class="section-header">
+    <div>
+      <div class="section-label">/ 02 — Booking Meja</div>
+      <h2 class="section-title">RESERVASI<br>MEJA</h2>
+    </div>
+  </div>
+
+  <!-- Remove User View Reservation Form in Admin -->
+  <div class="reservasi-grid">
+  <div class="reservasi-list" style="width:100%">
+    <div class="section-header" style="margin-bottom:20px;">
+      <div class="section-label">/ Daftar Reservasi Aktif</div>
+      <button class="btn btn-outline" onclick="fetchReservations()">🔄 Refresh</button>
+    </div>
+    
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Nama</th>
+            <th>Tanggal & Jam</th>
+            <th>Tamu</th>
+            <th>Meja</th>
+            <th>Status</th>
+            <th>Aksi</th>
+          </tr>
+        </thead>
+        <tbody id="reservasiTable"></tbody>
+      </table>
+    </div>
+  </div>
+  </div>
+</section>
+
+<!-- PESANAN ONLINE -->
+<section id="pesanan">
+  <div class="section-header">
+    <div>
+      <div class="section-label">/ 03 — Pesanan Online</div>
+      <h2 class="section-title">RIWAYAT<br>PESANAN</h2>
+    </div>
+    <button class="btn btn-outline" onclick="fetchOrders()">🔄 Refresh</button>
+  </div>
+  <div class="orders-grid" id="ordersGrid"></div>
+</section>
+
+<!-- DASHBOARD -->
+<section id="dashboard">
+  <div class="section-header">
+    <div>
+      <div class="section-label">/ 04 — Admin Dashboard</div>
+      <h2 class="section-title">DASHBOARD<br>RINGKASAN</h2>
+    </div>
+     <button class="btn btn-outline" onclick="fetchDashboard()">🔄 Refresh</button>
+  </div>
+  <div class="dash-grid" id="dashGrid"></div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;">
+    <div class="table-wrap" style="padding:0;">
+      <table>
+        <thead><tr><th colspan="3">Menu Terpopuler (Randomized via Stats)</th></tr></thead>
+        <tbody id="topMenuTable"></tbody>
+      </table>
+    </div>
+    <div class="table-wrap" style="padding:0;">
+      <table>
+        <thead><tr><th colspan="2">Aktivitas Terbaru</th></tr></thead>
+        <tbody id="activityTable"></tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- Tautan ke file JS terpisah Khusus Admin -->
+<script src="js/admin.js"></script>
+</body>
+</html>

@@ -1,0 +1,7 @@
+/node_modules
+/database.sqlite
+.DS_Store
+npm-debug.log*
+.env
+# Project specific legacies (optional)
+# restoran-manajemen.html

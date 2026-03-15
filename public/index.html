@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VOLTA — Restoran & Brasserie</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,300&family=Playfair+Display:ital@1&display=swap" rel="stylesheet">
+<!-- Tautan ke file CSS terpisah -->
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- LOADER -->
+<div id="loader">
+  <div class="loader-logo">V<span>O</span>LTA</div>
+  <div class="loader-bar"><div class="loader-progress"></div></div>
+</div>
+
+<!-- TOAST CONTAINER -->
+<div class="toast-container" id="toastContainer"></div>
+
+<!-- OVERLAY -->
+<div class="overlay" id="overlay" onclick="closeCart()"></div>
+
+<!-- CART PANEL -->
+<div class="cart-panel" id="cartPanel">
+  <div class="cart-header">
+    <h3>KERANJANG</h3>
+    <button class="cart-close" onclick="closeCart()">✕</button>
+  </div>
+  <div class="cart-items" id="cartItems">
+    <div class="cart-empty">
+      <div class="cart-empty-icon">🛒</div>
+      <p>Keranjang Anda kosong</p>
+    </div>
+  </div>
+  <div class="cart-footer" id="cartFooter" style="display:none">
+    <div class="cart-total">
+      <span class="cart-total-label">Total</span>
+      <span class="cart-total-num" id="cartTotalDisplay">Rp 0</span>
+    </div>
+    <button class="btn btn-primary" style="width:100%;justify-content:center;" onclick="checkout()">
+      Pesan Sekarang →
+    </button>
+  </div>
+</div>
+
+<!-- CART TRIGGER -->
+<button class="cart-trigger hidden" id="cartTrigger" onclick="openCart()">
+  🛒 Keranjang <span class="cart-count" id="cartCount">0</span>
+</button>
+
+<!-- NAV -->
+<nav id="navbar">
+  <a href="#" class="nav-logo">V<span>O</span>LTA</a>
+  <ul class="nav-links">
+    <li><a onclick="scrollToSection('menu')" class="active">Menu</a></li>
+    <li><a onclick="scrollToSection('reservasi')">Reservasi</a></li>
+    <li><a onclick="scrollToSection('lokasi')">Lokasi</a></li>
+  </ul>
+  <div class="nav-cta">
+    <button class="btn btn-outline" onclick="scrollToSection('reservasi')">Reservasi Meja</button>
+    <button class="btn btn-primary" onclick="scrollToSection('menu')">Pesan Online</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-content">
+    <div class="hero-tag">⚡ Buka Setiap Hari 10:00 – 23:00</div>
+    <h1 class="hero-title">
+      VOLTA
+      <em>Brasserie</em>
+    </h1>
+    <p class="hero-sub">Pengalaman kuliner premium dengan suasana penuh energi. Makanan terbaik, atmosfer legendarisnya.</p>
+    <div class="hero-actions">
+      <button class="btn btn-primary" onclick="scrollToSection('menu')">Lihat Menu</button>
+      <button class="btn btn-outline" onclick="scrollToSection('reservasi')">Buat Reservasi</button>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-item">
+        <span class="stat-num" id="statMenu">--</span>
+        <span class="stat-label">Menu Pilihan</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num" id="statRes">--</span>
+        <span class="stat-label">Kapasitas Hari ini</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num" id="statYears">8</span>
+        <span class="stat-label">Tahun Berdiri</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MENU -->
+<section id="menu">
+  <div class="section-header">
+    <div>
+      <div class="section-label">/ 01 — Daftar Menu</div>
+      <h2 class="section-title">MENU<br>KAMI</h2>
+    </div>
+    <div style="display:flex;gap:8px;align-items:center;">
+      <input type="text" id="menuSearch" placeholder="Cari menu..." style="width:220px;padding:10px 16px;font-size:13px;" oninput="filterMenuUI()">
+    </div>
+  </div>
+
+  <div class="menu-filters" id="menuFilters"></div>
+  <div class="menu-grid" id="menuGrid"></div>
+</section>
+
+<!-- RESERVASI -->
+<section id="reservasi">
+  <div class="section-header">
+    <div>
+      <div class="section-label">/ 02 — Booking Meja</div>
+      <h2 class="section-title">RESERVASI<br>MEJA</h2>
+    </div>
+  </div>
+
+  <div class="reservasi-grid">
+    <div class="reservasi-info">
+      <div class="info-item">
+        <div class="info-icon">📍</div>
+        <div class="info-text">
+          <h4>Alamat</h4>
+          <p>Jl. Gajah Mada No. 21, Pemalang<br>Jawa Tengah 52311</p>
+        </div>
+      </div>
+      <div class="info-item">
+        <div class="info-icon">🕐</div>
+        <div class="info-text">
+          <h4>Jam Operasional</h4>
+          <p>Senin – Minggu: 10:00 – 23:00<br>Dapur tutup pukul 22:30</p>
+        </div>
+      </div>
+      <div class="info-item">
+        <div class="info-icon">📞</div>
+        <div class="info-text">
+          <h4>Kontak</h4>
+          <p>+62 284 123 4567<br>reservasi@volta.id</p>
+        </div>
+      </div>
+      <div class="info-item">
+        <div class="info-icon">🪑</div>
+        <div class="info-text">
+          <h4>Kapasitas</h4>
+          <p>120 kursi reguler + 20 kursi VIP<br>Ruang private untuk grup tersedia</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-card">
+      <div class="form-title">BUAT RESERVASI</div>
+      <div class="form-grid">
+        <div class="form-group">
+          <label>Nama Lengkap</label>
+          <input type="text" id="resName" placeholder="Nama Anda">
+        </div>
+        <div class="form-group">
+          <label>No. Telepon</label>
+          <input type="tel" id="resPhone" placeholder="+62 ...">
+        </div>
+        <div class="form-group">
+          <label>Tanggal</label>
+          <input type="date" id="resDate">
+        </div>
+        <div class="form-group">
+          <label>Jam</label>
+          <select id="resTime">
+            <option>10:00</option><option>11:00</option>
+            <option>12:00</option><option>13:00</option>
+            <option>14:00</option><option>17:00</option>
+            <option>18:00</option><option>19:00</option>
+            <option>20:00</option><option>21:00</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Jumlah Tamu</label>
+          <select id="resGuests">
+            <option>1 orang</option><option>2 orang</option>
+            <option>3 orang</option><option>4 orang</option>
+            <option>5 orang</option><option>6 orang</option>
+            <option>7-10 orang</option><option>10+ orang</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Tipe Meja</label>
+          <select id="resTable">
+            <option>Reguler</option>
+            <option>VIP</option>
+            <option>Outdoor</option>
+            <option>Private Room</option>
+          </select>
+        </div>
+        <div class="form-group full">
+          <label>Catatan Khusus</label>
+          <textarea id="resNotes" placeholder="Alergi makanan, permintaan khusus, dekorasi..."></textarea>
+        </div>
+        <div class="form-group full">
+          <button class="btn btn-primary" style="width:100%;justify-content:center;padding:14px;" onclick="submitReservasi()">
+            Konfirmasi Reservasi →
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<!-- LOKASI -->
+<section id="lokasi">
+  <div class="section-header">
+    <div>
+      <div class="section-label">/ 05 — Temukan Kami</div>
+      <h2 class="section-title">LOKASI<br>KAMI</h2>
+    </div>
+  </div>
+  <div class="lokasi-grid">
+    <div class="map-container">
+      <div class="map-placeholder">
+        <div class="map-grid-lines"></div>
+        <div style="position:absolute;top:25%;left:20%;width:4px;height:4px;background:rgba(232,197,71,0.3);border-radius:50%;"></div>
+        <div style="position:absolute;top:60%;left:70%;width:6px;height:6px;background:rgba(232,197,71,0.2);border-radius:50%;"></div>
+        <div style="position:absolute;top:40%;left:80%;width:3px;height:3px;background:rgba(232,197,71,0.15);border-radius:50%;"></div>
+
+        <!-- fake road lines -->
+        <svg style="position:absolute;inset:0;width:100%;height:100%;opacity:0.15" viewBox="0 0 400 400">
+          <line x1="0" y1="200" x2="400" y2="200" stroke="#e8c547" stroke-width="2"/>
+          <line x1="200" y1="0" x2="200" y2="400" stroke="#e8c547" stroke-width="2"/>
+          <line x1="0" y1="100" x2="400" y2="100" stroke="#e8c547" stroke-width="1"/>
+          <line x1="0" y1="300" x2="400" y2="300" stroke="#e8c547" stroke-width="1"/>
+          <line x1="100" y1="0" x2="100" y2="400" stroke="#e8c547" stroke-width="1"/>
+          <line x1="300" y1="0" x2="300" y2="400" stroke="#e8c547" stroke-width="1"/>
+        </svg>
+
+        <div class="map-pin-container">
+          <div class="map-pin-pulse2"></div>
+          <div class="map-pin-pulse"></div>
+          <div class="map-pin">📍</div>
+        </div>
+        <div style="font-family:var(--font-display);font-size:18px;letter-spacing:3px;color:var(--white);z-index:1;">VOLTA BRASSERIE</div>
+
+        <div class="map-address-card">
+          <div class="map-address-icon">🗺️</div>
+          <div class="map-address-text">
+            <h4>Jl. Gajah Mada No. 21</h4>
+            <p>Pemalang, Jawa Tengah — 7.2km dari pusat kota</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div class="info-item" style="border-top:1px solid var(--border);">
+        <div class="info-icon">🚗</div>
+        <div class="info-text">
+          <h4>Parkir</h4>
+          <p>Parkir gratis untuk 80 kendaraan. Valet tersedia mulai pukul 17:00.</p>
+        </div>
+      </div>
+      <div class="info-item">
+        <div class="info-icon">🚌</div>
+        <div class="info-text">
+          <h4>Transportasi Umum</h4>
+          <p>Halte bus Jl. Gajah Mada 200m dari restoran. Angkot jalur 04 & 09 lewat depan.</p>
+        </div>
+      </div>
+      <div class="info-item">
+        <div class="info-icon">♿</div>
+        <div class="info-text">
+          <h4>Aksesibilitas</h4>
+          <p>Restoran sepenuhnya aksesibel kursi roda. Tersedia tempat duduk prioritas.</p>
+        </div>
+      </div>
+      <div class="info-item">
+        <div class="info-icon">🌐</div>
+        <div class="info-text">
+          <h4>WiFi</h4>
+          <p>WiFi gratis tersedia. SSID: VOLTA-GUEST | Pass: brasserie2024</p>
+        </div>
+      </div>
+      <div style="margin-top:28px;">
+        <button class="btn btn-primary" onclick="window.open('https://maps.google.com/?q=Pemalang+Jawa+Tengah')">
+          🗺️ Buka di Google Maps
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer style="background:var(--off-black);border-top:1px solid var(--border);padding:48px 40px;">
+  <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:24px;">
+    <div>
+      <div style="font-family:var(--font-display);font-size:36px;letter-spacing:4px;color:var(--white)">V<span style="color:var(--accent)">O</span>LTA</div>
+      <div style="font-size:12px;color:var(--muted);margin-top:4px;">© 2024 Volta Brasserie. All rights reserved.</div>
+    </div>
+    <div style="font-size:12px;color:var(--muted);text-align:right;">
+      Sistem Manajemen Restoran<br>
+      <span style="color:var(--accent);">Full-Stack v1.0</span>
+    </div>
+  </div>
+</footer>
+
+<!-- Tautan ke file JS terpisah -->
+<script src="js/app.js"></script>
+</body>
+</html>
