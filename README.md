@@ -45,6 +45,11 @@ Welcome to **VOLTA**, a premium, high-contrast, and responsive restaurant manage
 5. **Access the app**:
    - Client: `http://localhost:3000`
    - Admin: `http://localhost:3000/admin.html`
+     
+## 🔑 Admin Access
+   To access the Admin Dashboard (/admin.html), please use the following credentials:
+   - **Password:** `password123`
+   (Note: This is a default password for demonstration purposes)
 
 ## 📂 Project Structure
 
